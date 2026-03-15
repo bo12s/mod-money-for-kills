@@ -127,6 +127,19 @@ public:
 		}
 	}
 
+void OnPlayerKilledByCreature(Creature* killer, Player* killed){
+    if (!killer || !killed)
+        return;
+    Unit* owner = killer->GetOwner();
+    if (!owner)
+        return;
+    Player* petOwner = owner->ToPlayer();
+    if (!petOwner)
+        return;
+    if (petOwner == killed)
+        return;
+    MoneyForKills::OnPlayerPVPKill(petOwner, killed);
+}
 	// Player Kill Reward
 	void OnPlayerPVPKill(Player* killer, Player* victim)
 	{
